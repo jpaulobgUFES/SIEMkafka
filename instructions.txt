@@ -1,0 +1,33 @@
+It is important that all the files are kept in the same directory.
+
+
+For correct execution of the codes you will need to have the following packages installed on your computer:
+
+- python3
+- pip3
+
+Once pip3 is installed, you should install the following libraries in python:
+
+pip3 install python-kafka
+pip3 install kafka-tools
+
+
+The first thing you will need to do once you have all the packages and libraries installed is to change the IP address of the Kafka server that will consume the messages. This has been facilitated in all python files via the SERVER variable, you only need to change the address and port if the server is listening on a different port than the default, if listening on port 9092, you will only need to change the address.
+
+
+Once that's done, if you don't already have a topic created to post messages to the server, you'll need to do that through the createtopic.py program. It will ask for the name of the topic you want to create, by default we will use topic ns for alert messages regarding the network slicing component.
+
+if you've already run the program once and haven't deleted the topic after that, you don't need to run it again. If you try to run it more than once, you will receive an error message from the server with the message "topic already exits" at the end, indicating that the topic has already been created.
+
+After completing the previous steps, you are ready to create the alerts. 
+
+
+If your alert is a suspicious MAC address trying to access the controller you can run the script scriptACL.sh which will ask you to enter the suspicious MAC address and will create a rule on the firewall to filter that. If the script found the suspicious MAC in the firewall log,it will send an alert to the server with this information via the python program called by it. If in the first execution of the script you receive the message "MAC Address not found in the log file" it is possible that the firewall has not had the opportunity to record information about the access attempts of this MAC, in this case after a period of time, it is interesting that you rerun the code. As a subproduct of the script a file with the occurrences of the suspicious MAC will also be created under the name "logempower" in the current directory.
+
+If your alert is of a suspicious user trying to access the controller you can run the scriptauth.sh script which will ask you to enter the suspicious user and will search the log for this user. If it is found, an alert will be sent to the server with this information via the python program called by it. As a subproduct of the script a file with the occurrences of the suspected user will also be created under the name "logauth" in the current directory.
+
+
+
+
+
+
